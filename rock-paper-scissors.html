@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+<body></body> <!-- Needed for live reload-->
+
+<script>
+    TicTacToe();
+
+    function TicTacToe() {
+        let playerMove;
+        let botMove;
+        let result;
+        let playAgain = true;
+
+        welcomeMsg();
+
+        while (playAgain) {
+            playerMove = getPlayerMove();
+            botMove = getBotMove();
+
+            result = playerWinsRound(playerMove, botMove);
+
+            dispOutcome(result);
+
+            playAgain = promptPlayAgain();
+        }
+
+        console.log("Thanks for playing.");
+
+    }
+
+    function promptPlayAgain() {
+        let playAgainStr = prompt("Play again? (y/n)");
+
+        playAgainStr = playAgainStr.toLowerCase();
+
+        return playAgainStr === 'y';
+    }
+
+    function dispOutcome(result) {
+        if (result === "tie") {
+            console.log("Looks like it was a tie!")
+        } else {
+            let congrats = `Congrats to ${result}! They won the round.`;
+            console.log(congrats);   
+        }
+    }
+
+    function playerWinsRound(playerMove, botMove) {
+        // returns string of the current round's winner. If not, then tie.
+        if (((playerMove === "rock") && (botMove === "scissors")) || 
+        ((playerMove === "paper") && (botMove === "rock")) ||
+        ((playerMove === "scissors") && (botMove === "paper"))) {
+            return "player";
+
+        } else if (playerMove === botMove) {
+            return "tie";
+
+        } else {
+            return "bot";
+        }
+    }
+
+    function getPlayerMove() {
+        return prompt("What's your move? (rock, paper scissors)");
+    }
+
+    
+
+    function getBotMove() {
+        let moveSet = ["rock", "paper", "scissors"];
+        let index = randint(2);
+
+        console.log(`The bot chose ${moveSet[index]}!`);
+
+        return moveSet[index];
+    }
+
+    function welcomeMsg() {
+        console.log("First 'Project' in JavaScript! This is Tic Tac Toe.")
+    }
+
+
+    function randint(maxNum) {
+        // Returns a random number from 0 to maxNum
+        return (Math.random() * maxNum).toFixed(0);
+    }
+
+</script>
+
+</html>
